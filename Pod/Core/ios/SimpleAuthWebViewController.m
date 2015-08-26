@@ -93,6 +93,11 @@
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
     [mutableRequest setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
+    
+    // clear cookie stored for the request url 
+    NSArray *cookiesForURL = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:mutableRequest.URL];
+    for (NSHTTPCookie *cookie in cookiesForURL) [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    
     return mutableRequest;
 }
 
