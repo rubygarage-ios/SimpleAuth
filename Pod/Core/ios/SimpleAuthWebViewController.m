@@ -117,6 +117,10 @@
 #pragma mark - UIWebViewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    if (error.code == NSURLErrorCancelled) {
+        return;
+    }
+    
     webView.delegate = nil;
     self.completion(self, nil, error);
 }
